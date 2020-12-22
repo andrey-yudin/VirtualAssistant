@@ -65,7 +65,3 @@ class ApplicationSettings(object):
             cls._organization_name,
             cls._config_file_name
         )
-
-
-if __name__ == '__main__':
-    application_settings = ApplicationSettings()

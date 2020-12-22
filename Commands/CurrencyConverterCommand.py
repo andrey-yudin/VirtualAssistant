@@ -26,7 +26,7 @@ class CurrencyConverterCommand(AbstractCommand):
         _target_currency = input("Введите конечную валюту: \n")
         try:
             sys.stdout.write(
-                f'Резульат конвертации: "{round(converter.convert(_summa, _from_currency, _target_currency),2)}"\n'
+                f'Результат конвертации: "{round(converter.convert(_summa, _from_currency, _target_currency),2)}"\n'
             )
         except ValueError:
             sys.stdout.write("Ошибка выполнения функции")
