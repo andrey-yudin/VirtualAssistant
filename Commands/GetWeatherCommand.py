@@ -1,7 +1,7 @@
 import requests
 import sys
 from Commands.AbstractCommand import AbstractCommand
-from AppSource.AppSettings import ApplicationSettings
+from AppLogic.AppSettings import ApplicationSettings
 
 
 class GetWeatherCommand(AbstractCommand):
