@@ -24,8 +24,10 @@ class EquationSolveCommand(AbstractCommand):
     def enter_solver_args(self) -> bool:
         try:
             self.power = int(input('Введите степень уравнения:\n'))
+            if self.power <= 0:
+                raise ValueError
         except ValueError:
-            sys.stdout.write('Необходимо ввести целое число\n')
+            sys.stdout.write('Необходимо ввести целое положительное число\n')
             return False
         for i in range(self.power + 1, 0, -1):
             try:
@@ -42,6 +44,7 @@ class EquationSolveCommand(AbstractCommand):
                 self.equation += self.equation_coefficient[i-self.power-1] * self.x**(i-1)
             else:
                 self.equation += self.equation_coefficient[i - self.power - 1]
+        self.equation_coefficient.clear()
         return True
 
     def execute(self):
