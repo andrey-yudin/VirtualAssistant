@@ -22,7 +22,7 @@ class EquationSolveCommand(AbstractCommand):
 
     def enter_equation(self) -> bool:
         try:
-            self.equation = str(input(f'Введите уравнени, используя символы {self.allowed_symbols}:\n'))
+            self.equation = str(input(f'Введите уравнение, используя символы {self.allowed_symbols}:\n'))
             for i in self.equation:
                 if i in self.allowed_symbols:
                     pass
