@@ -1,6 +1,6 @@
-import AppLogic.AppLogic
+from AppLogic.AppLogic import ApplicationLogic
 
 if __name__ == '__main__':
-    _app = AppLogic.AppLogic.ApplicationLogic()
+    _app = ApplicationLogic()
     _app.run_app()
 

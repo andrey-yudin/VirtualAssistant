@@ -47,7 +47,7 @@ class CommandFactory(object):
             return True
 
         def execute(self):
-            sys.stdout.write(f'Неподдериваемая команда: "{self._command}".\n')
+            sys.stdout.write(f'Неподдерживаемая команда: "{self._command}".\n')
 
     def __init__(self):
         self.commands = [

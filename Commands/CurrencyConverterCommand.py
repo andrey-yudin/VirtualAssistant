@@ -21,9 +21,21 @@ class CurrencyConverterCommand(AbstractCommand):
 
     def execute(self):
         converter = CurrencyConverter()
-        _summa = int(input("Введите сумму для конвертации: \n"))
-        _from_currency = input("Введите исходную валюту: \n")
-        _target_currency = input("Введите конечную валюту: \n")
+        try:
+            _summa = float(input("Введите сумму для конвертации: \n"))
+        except ValueError:
+            sys.stdout.write('Ошибка при вводе суммы для конвертации\n')
+            return
+        try:
+            _from_currency = input("Введите исходную валюту: \n")
+        except ValueError:
+            sys.stdout.write('Введите исходную валюту в общепринятом формате, например "RUB"\n')
+            return
+        try:
+            _target_currency = input("Введите конечную валюту: \n")
+        except ValueError:
+            sys.stdout.write('Введите конечную валюту в общепринятом формате, например "RUB"\n')
+            return
         try:
             sys.stdout.write(
                 f'Результат конвертации: "{round(converter.convert(_summa, _from_currency, _target_currency),2)}"\n'

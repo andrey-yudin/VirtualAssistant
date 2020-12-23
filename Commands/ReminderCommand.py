@@ -13,6 +13,9 @@ class ReminderCommand(AbstractCommand):
         self.reminder_time = datetime.now().time()
         self.notify_title = "Напоминалка"
         self.notify_app_name = "VirtualAssistant"
+        self.enable_reminder = False
+        reminder_task = Thread(target=self.send_remind, daemon=True)
+        reminder_task.start()
 
     @property
     def name(self):
@@ -40,19 +43,22 @@ class ReminderCommand(AbstractCommand):
 
     def send_remind(self):
         while True:
-            if self.reminder_time.hour == datetime.now().time().hour and \
-                    self.reminder_time.minute == datetime.now().time().minute:
-                plyer.notification.notify(
-                    message=self.reminder_text,
-                    app_name=self.notify_app_name,
-                    title=self.notify_title,
-                )
-                return
+            if self.enable_reminder:
+                if self.reminder_time.hour == datetime.now().time().hour and \
+                        self.reminder_time.minute == datetime.now().time().minute:
+                    plyer.notification.notify(
+                        message=self.reminder_text,
+                        app_name=self.notify_app_name,
+                        title=self.notify_title,
+                    )
+                    self.enable_reminder = False
             sleep(1)
 
     def execute(self):
         if not self.enter_reminder_args():
             return
-        # reminder_task = Thread(target=self.send_remind())
-        # reminder_task.start()
-
+        if not self.enable_reminder:
+            self.enable_reminder = True
+        else:
+            sys.stdout.write('Напоминание уже установлено\n')
+            return
