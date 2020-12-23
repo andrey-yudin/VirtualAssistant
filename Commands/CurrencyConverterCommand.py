@@ -24,7 +24,10 @@ class CurrencyConverterCommand(AbstractCommand):
         try:
             _summa = float(input("Введите сумму для конвертации: \n"))
         except ValueError:
-            sys.stdout.write('Ошибка при вводе суммы для конвертации\n')
+            sys.stdout.write(
+                'Ошибка при вводе суммы для конвертации '
+                '(для ввода десятичной дроби используйте точку, в качестве разделителя целой и дробной частей)'
+                '\n')
             return
         try:
             _from_currency = input("Введите исходную валюту: \n")

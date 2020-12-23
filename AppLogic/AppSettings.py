@@ -5,8 +5,8 @@ from configparser import ConfigParser
 
 
 class ApplicationSettings(object):
-    _organization_name = 'Organization'
-    _config_file_name = 'Application.conf'
+    _organization_name = 'VirtualAssistantApp'
+    _config_file_name = 'VirtualAssistantApp.conf'
 
     def __new__(cls):
         if not hasattr(cls, 'instance'):
@@ -28,7 +28,7 @@ class ApplicationSettings(object):
 
     def _create_default_local_config(self):
         self._config['CommonSettings'] = {}
-        self._config['CommonSettings']['city'] = str("Tomsk")
+        self._config['CommonSettings']['city'] = str("Tomsk, RU")
 
         path = self._local_config_path()
         basedir = os.path.dirname(path)

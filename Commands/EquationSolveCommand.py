@@ -1,14 +1,13 @@
 import sys
-from sympy import solve, Eq, symbols
+from sympy import solve, symbols, sympify
 from Commands.AbstractCommand import AbstractCommand
 
 
 class EquationSolveCommand(AbstractCommand):
     def __init__(self):
-        self.power = 0
-        self.equation_coefficient = list()
-        self.equation = 0
         self.x = symbols('x')
+        self.allowed_symbols = "+-*x0123456789./()= "
+        self.equation = None
 
     @property
     def name(self):
@@ -21,40 +20,26 @@ class EquationSolveCommand(AbstractCommand):
     def command_exist(self, command: str) -> bool:
         return command == self.name
 
-    def enter_solver_args(self) -> bool:
+    def enter_equation(self) -> bool:
         try:
-            self.power = int(input('Введите степень уравнения:\n'))
-            if self.power <= 0:
-                raise ValueError
-        except ValueError:
-            sys.stdout.write('Необходимо ввести целое положительное число\n')
-            return False
-        for i in range(self.power + 1, 0, -1):
-            try:
-                if i - 1 != 0:
-                    self.equation_coefficient.append(float(input(f'Введите коэффициент при x^{i - 1}\n')))
+            self.equation = str(input(f'Введите уравнени, используя символы {self.allowed_symbols}:\n'))
+            for i in self.equation:
+                if i in self.allowed_symbols:
+                    pass
                 else:
-                    self.equation_coefficient.append(float(input(f'Введите свободный член:\n')))
-            except ValueError:
-                sys.stdout.write('Ошибка при вводе коэффициента\n')
-                return False
-        self.equation = 0
-        for i in range(self.power + 1, 0, -1):
-            if i - 1 != 0:
-                self.equation += self.equation_coefficient[i-self.power-1] * self.x**(i-1)
-            else:
-                self.equation += self.equation_coefficient[i - self.power - 1]
-        self.equation_coefficient.clear()
+                    raise ValueError
+        except ValueError:
+            sys.stdout.write('Обнаружен недопустимый символ в выражении\n')
+            return False
         return True
 
     def execute(self):
-        if not self.enter_solver_args():
+        if not self.enter_equation():
             return
-        sys.stdout.write(f'Введенное уравнение: {self.equation} = 0 \n')
         try:
             sys.stdout.write(
                 f'Результат решения уравнения: '
-                f'"{solve(Eq(self.equation, 0), self.x)}"\n'
+                f'"{solve(sympify("Eq(" + self.equation.replace("=", ",") + ")"), self.x)}"\n'
             )
         except ValueError:
             sys.stdout.write('Ошибка выполнения функции\n')
