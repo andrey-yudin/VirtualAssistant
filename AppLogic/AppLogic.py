@@ -1,4 +1,3 @@
-import sys
 from Commands.CommandFactory import CommandFactory
 
 
@@ -13,7 +12,7 @@ class ApplicationLogic(object):
             self.factory.get_command(line).execute()
 
     def run_app(self):
-        sys.stdout.write('Вас приветсвует вирутальный помощник\n')
+        print('Вас приветсвует вирутальный помощник\n')
         self.command_execute_func()
 
 

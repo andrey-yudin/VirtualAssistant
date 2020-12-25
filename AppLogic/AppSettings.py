@@ -26,9 +26,16 @@ class ApplicationSettings(object):
     def person_city(self):
         return self._get_value('CommonSettings', 'City')
 
+    @property
+    def weather_api_key(self):
+        return self._get_value('Weather', 'api_key')
+
     def _create_default_local_config(self):
         self._config['CommonSettings'] = {}
         self._config['CommonSettings']['city'] = str("Tomsk, RU")
+
+        self._config['Weather'] = {}
+        self._config['Weather']['api_key'] = str("221240ff2b98de0a1e4f018c05e0a459")
 
         path = self._local_config_path()
         basedir = os.path.dirname(path)

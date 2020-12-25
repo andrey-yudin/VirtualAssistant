@@ -1,4 +1,3 @@
-import sys
 import plyer
 from threading import Thread
 from datetime import datetime
@@ -37,7 +36,7 @@ class ReminderCommand(AbstractCommand):
             if self.reminder_time < datetime.now().time():
                 raise ValueError
         except ValueError:
-            sys.stdout.write("Ошибка при вводе времени\n")
+            print("Ошибка при вводе времени\n")
             return False
         return True
 
@@ -60,5 +59,5 @@ class ReminderCommand(AbstractCommand):
         if not self.enable_reminder:
             self.enable_reminder = True
         else:
-            sys.stdout.write('Напоминание уже установлено\n')
+            print('Напоминание уже установлено\n')
             return

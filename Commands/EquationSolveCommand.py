@@ -1,12 +1,9 @@
-import sys
-from sympy import solve, symbols, sympify
+from sympy import solve, sympify
 from Commands.AbstractCommand import AbstractCommand
 
 
 class EquationSolveCommand(AbstractCommand):
     def __init__(self):
-        self.x = symbols('x')
-        self.allowed_symbols = "+-*x0123456789./()= "
         self.equation = None
 
     @property
@@ -15,21 +12,16 @@ class EquationSolveCommand(AbstractCommand):
 
     @property
     def help(self) -> str:
-        return 'Решает уравнения относительно одной переменной, вида "a*x**n + b*x**(n-1) + ... + c*x + d = 0"'
+        return 'Решает вводимые пользователем уравнения'
 
     def command_exist(self, command: str) -> bool:
         return command == self.name
 
     def enter_equation(self) -> bool:
         try:
-            self.equation = str(input(f'Введите уравнение, используя символы {self.allowed_symbols}:\n'))
-            for i in self.equation:
-                if i in self.allowed_symbols:
-                    pass
-                else:
-                    raise ValueError
+            self.equation = str(input(f'Введите уравнение: \n'))
         except ValueError:
-            sys.stdout.write('Обнаружен недопустимый символ в выражении\n')
+            print('Обнаружен недопустимый символ в выражении\n')
             return False
         return True
 
@@ -37,10 +29,15 @@ class EquationSolveCommand(AbstractCommand):
         if not self.enter_equation():
             return
         try:
-            sys.stdout.write(
+            print(
                 f'Результат решения уравнения: '
-                f'"{solve(sympify("Eq(" + self.equation.replace("=", ",") + ")"), self.x)}"\n'
+                f'"{solve(sympify("Eq(" + self.equation.replace("=", ",") + ")"))}"\n'
             )
-        except ValueError:
-            sys.stdout.write('Ошибка выполнения функции\n')
+        except Exception as e:
+            print('Получено исключение ' + str(e) + '\n')
+            print('Проверьте правильность написания функции;' + '\n' +
+                  'Целая и дробная часть чисел должны разделяться точкой \n'
+                  )
+            print('Для получения справки о дотсупных функциях обратитесь '
+                  'на сайт "https://docs.sympy.org/latest/index.html" \n')
             pass
